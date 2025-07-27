@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahmed Sami | Web Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1f2c47;
+      --navy-dark: #192339;
+      --beige: #ded2b5;
+      --beige-light: #f0ebdc;
+      --red: #b22132;
+      --white: #f9f9f9;
+      --text-dark: #1a1a1a;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--beige);
+      line-height: 1.6;
+    }
+
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px;
+      background: var(--red);
+      width: 0;
+      z-index: 9999;
+      transition: width 0.25s ease-out;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      background: var(--navy);
+      position: relative;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--red);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 2rem;
+      color: var(--beige);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--red);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: var(--beige);
+      border-radius: 2px;
+    }
+
+    .mobile-nav {
+      display: none;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--navy-dark);
+      width: 100%;
+      padding: 1rem;
+      z-index: 9999;
+    }
+
+    .mobile-nav a {
+      margin: 0.5rem 0;
+      color: var(--beige);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 4rem 3rem;
+      background: var(--navy);
+      gap: 2rem;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      color: var(--beige);
+    }
+
+    .hero-text p {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #c9c1a6;
+    }
+
+    .hero img {
+      width: 100%;
+      max-width: 400px;
+      margin-left: auto;
+      transform: scaleX(-1);
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .cta {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      background: var(--red);
+      border: none;
+      color: var(--white);
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .cta:hover {
+      background: #941926;
+    }
+
+    section {
+      padding: 4rem 3rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    section.reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    #projects {
+      background: var(--navy-dark);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--white);
+      color: var(--text-dark);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-card h3 {
+      margin-bottom: 0.5rem;
+      color: var(--navy);
+    }
+
+    .project-card p {
+      color: #3a3a3a;
+    }
+
+    #skills {
+      background: var(--beige-light);
+      color: var(--text-dark);
+    }
+
+    .skills ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .skills li {
+      background: white;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      color: var(--navy);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .services {
+      background: repeating-linear-gradient(135deg, var(--red), var(--red) 10px, #a11c2b 10px, #a11c2b 20px);
+      color: var(--white);
+    }
+
+    .services ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .services li {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+    }
+
+    .about {
+      background: var(--beige);
+      color: var(--text-dark);
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+      border-radius: 1rem;
+      padding: 3rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .contact {
+      background: var(--navy);
+      color: var(--beige);
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .contact a {
+      color: var(--red);
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--navy-dark);
+      color: var(--beige);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero img {
+        max-width: 250px;
+        margin: 2rem auto 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="progress-bar"></div>
+  <header>
+    <div class="logo">Ahmed Sami</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#projects" onclick="toggleMenu()">Projects</a>
+      <a href="#skills" onclick="toggleMenu()">Skills</a>
+      <a href="#about" onclick="toggleMenu()">About</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
+  </header>
+
+  <section class="hero reveal">
+    <div class="hero-text">
+      <h1>Hi, I'm Ahmed<br />Web Developer & Builder</h1>
+      <p>I create interactive, fast, and user-focused websites. Let’s build the web together.</p>
+      <button class="cta" onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });">View My Work</button>
+    </div>
+    <img src="hero.png" alt="Ahmed Sami portrait" />
+  </section>
+
+  <section id="projects">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card"><h3>Portfolio Website</h3><p>Responsive personal website with HTML, CSS, and JS. Features dark mode and smooth scrolling.</p></div>
+      <div class="project-card"><h3>Task Manager App</h3><p>Full-stack web app for managing tasks, using Node.js, Express, and MongoDB.</p></div>
+      <div class="project-card"><h3>Farm Monitoring Dashboard</h3><p>IoT dashboard to visualize sensor data (temperature, soil moisture) using Chart.js.</p></div>
+      <div class="project-card"><h3>Real-time Chat App</h3><p>Socket.io powered chat platform with authentication, themes, and emoji support.</p></div>
+    </div>
+  </section>
+
+  <section id="skills" class="skills">
+    <h2 class="section-title">Skills</h2>
+    <ul>
+      <li>HTML, CSS, JavaScript</li>
+      <li>React & Vue.js</li>
+      <li>Node.js & Express</li>
+      <li>MongoDB & Firebase</li>
+      <li>REST APIs & JSON</li>
+      <li>Git & GitHub</li>
+    </ul>
+  </section>
+
+  <section class="services">
+    <h2 class="section-title">Services</h2>
+    <ul>
+      <li>Website Development</li>
+      <li>UI/UX Design</li>
+      <li>Landing Page Optimization</li>
+      <li>Performance Tuning</li>
+      <li>Consultation & Mentorship</li>
+    </ul>
+  </section>
+
+  <section id="about" class="about">
+    <h2 class="section-title">About Me</h2>
+    <p>I’m a web developer with a focus on usability, performance, and clean code. I enjoy creating tools that solve real-world problems. Outside of coding, I love learning new tech, mentoring, and working on open-source ideas.</p>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2 class="section-title">Contact</h2>
+    <p>Email: <a href="ahmedbnsami@gmail.com">ahmedbnsami@gmail.com</a></p>
+    <p>GitHub: <a href="https://github.com/bnsami">@bnsami</a></p>
+    <p>LinkedIn: <a href="https://linkedin.com/in/bnsami">linkedin.com/in/bnsami</a></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Ahmed Sami. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('mobileNav').classList.remove('open');
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      document.getElementById('progress-bar').style.width = scrollPercent + '%';
+    });
+  </script>
+</body>
+</html>
